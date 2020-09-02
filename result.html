@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <style>
+  body {
+  background: url('static/images/PAN_CARD_result_page_2.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  /* -o-background-size: cover; */
+  /* background-size: cover; */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* background-size: contain; */
+  font-size: 1.3em !important;
+  color: #001 !important;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+}
+input {
+  font-size: 20px;
+  height:50px;
+}
+.imagediv {
+	float:left;
+    margin-top:50px;
+}
+.imagediv .showonhover {
+	background:red;
+	padding:20px;
+	opacity:0.9;
+	color:white;
+	width: 100%;
+	display:block;
+	text-align:center;
+	cursor:pointer;
+}
+  </style>
+   <body align="center">
+     <h1>PAN Card Details</h1>
+     <br>
+     {% for key, value in prediction_text.items() %}
+        {{ key }} : {{ value }}<br><br>
+     {% endfor %}
+     <img src="{{ signature }}" style="float: center; height: 8em; margin-right: 1%; margin-bottom: 0.5em;">
+     <img src="{{ photo }}" style="float: center; height: 8em; margin-left: 1%; margin-bottom: 0.5em;"><br>
+   </body>
+</html>
