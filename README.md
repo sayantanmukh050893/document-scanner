@@ -1,2 +1,2 @@
-# pan-card-scan
-The following project helps us scan old PAN cards
+# Dogs_Cats_Image
+The following repository is about classifying an image as either Dog or Cat
