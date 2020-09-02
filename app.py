@@ -90,4 +90,4 @@ def predict_front_end():
 
 
 if __name__ == "__main__":
-    app.run(debug=True,port=1212)
+    app.run(debug=True)
