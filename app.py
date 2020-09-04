@@ -7,6 +7,7 @@ import numpy as np
 import cv2
 import pytesseract
 from PIL import Image
+from random import randint
 
 image_folder = os.path.join('static', 'images')
 
@@ -84,16 +85,22 @@ def predict_front_end():
 
     signature_img=img[299:360,4:260]
     signature_img = cv2.cvtColor(signature_img, cv2.COLOR_BGR2RGB)
-    cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'],'signature.jpg'), signature_img)
+    ran = randint(0,10e6)
+    signature_path = 'signature.jpg?dummy='+str(ran)
+    full_signature = os.path.join(app.config['UPLOAD_FOLDER'],signature_path)
+    cv2.imwrite(full_signature,signature_img)
+    #cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'],'signature.jpg'), signature_img)
     #cv2.imwrite(os.path.join('static/images' , 'signature.jpg'), signature_img)
-    full_signature = os.path.join(app.config['UPLOAD_FOLDER'],'signature.jpg')
     #full_signature = os.path.join('static/images' , 'signature.jpg')
 
     photo_img = img[243:371,450:585]
     photo_img = cv2.cvtColor(photo_img, cv2.COLOR_BGR2RGB)
-    cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'], 'photo.jpg'), photo_img)
+    photo_path = 'photo.jpg?dummy='+str(ran)
+    full_photo = os.path.join(app.config['UPLOAD_FOLDER'],photo_path)
+    cv2.imwrite(full_photo,photo_img)
+    #cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'], 'photo.jpg'), photo_img)
     #cv2.imwrite(os.path.join('static/images' , 'photo.jpg'), photo_img)
-    full_photo = os.path.join(app.config['UPLOAD_FOLDER'],'photo.jpg')
+    #full_photo = os.path.join(app.config['UPLOAD_FOLDER'],'photo.jpg')
     #full_photo = os.path.join('static/images' , 'photo.jpg')
 
     pan_details = {
