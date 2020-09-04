@@ -8,7 +8,7 @@ import cv2
 import pytesseract
 from PIL import Image
 
-image_folder = os.path.join('public', 'images')
+image_folder = os.path.join('static', 'images')
 
 app = Flask(__name__)
 # dropzone = Dropzone(app)
