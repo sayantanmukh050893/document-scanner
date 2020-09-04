@@ -44,16 +44,20 @@ def predict_api():
     img = np.array(img)
     img = cv2.resize(img,dsize=(600,384))
 
-    name_img=img[93:131,6:330]
+    name_img=img[93:135,3:341]
+    #name_img=img[93:131,6:330]
     name = pytesseract.image_to_string(name_img)
-
-    father_name_img=img[137:167,5:350]
+    
+    father_name_img=img[140:179,3:341]
+    #father_name_img=img[137:167,5:350]
     father_name = pytesseract.image_to_string(father_name_img)
-
-    date_of_birth_img=img[172:222,4:150]
+    
+    date_of_birth_img=img[181:221,3:341]
+    #date_of_birth_img=img[172:222,4:150]
     date_of_birth = pytesseract.image_to_string(date_of_birth_img)
-
-    pan_img=img[243:289,4:233]
+    
+    pan_img=img[248:297,1:282]
+    #pan_img=img[243:289,4:233]
     pan = pytesseract.image_to_string(pan_img)
 
     pan_details = [
@@ -73,20 +77,25 @@ def predict_front_end():
     img = Image.open(image)
     img = np.array(img)
     img = cv2.resize(img,dsize=(600,384))
-
-    name_img=img[93:131,6:330]
+    
+    name_img=img[93:135,3:341]
+    #name_img=img[93:131,6:330]
     name = pytesseract.image_to_string(name_img)
-
-    father_name_img=img[137:167,5:350]
+    
+    father_name_img=img[140:179,3:341]
+    #father_name_img=img[137:167,5:350]
     father_name = pytesseract.image_to_string(father_name_img)
-
-    date_of_birth_img=img[172:222,4:150]
+    
+    date_of_birth_img=img[181:221,3:341]
+    #date_of_birth_img=img[172:222,4:150]
     date_of_birth = pytesseract.image_to_string(date_of_birth_img)
-
-    pan_img=img[243:289,4:233]
+    
+    pan_img=img[248:297,1:282]
+    #pan_img=img[243:289,4:233]
     pan = pytesseract.image_to_string(pan_img)
-
-    signature_img=img[299:360,4:260]
+    
+    signature_img=img[302:351,1:312]
+    #signature_img=img[299:360,4:260]
     signature_img = cv2.cvtColor(signature_img, cv2.COLOR_BGR2RGB)
     #ran = randint(0,10e6)
     #signature_path = 'signature.jpg?dummy='+str(ran)
