@@ -85,9 +85,11 @@ def predict_front_end():
 
     signature_img=img[299:360,4:260]
     signature_img = cv2.cvtColor(signature_img, cv2.COLOR_BGR2RGB)
-    ran = randint(0,10e6)
-    signature_path = 'signature.jpg?dummy='+str(ran)
-    full_signature = os.path.join(app.config['UPLOAD_FOLDER'],signature_path)
+    #ran = randint(0,10e6)
+    #signature_path = 'signature.jpg?dummy='+str(ran)
+    #full_signature = os.path.join(app.config['UPLOAD_FOLDER'],signature_path)
+    full_signature = os.path.join('static/images' , 'signature.jpg')
+    os.remove(full_signature)
     cv2.imwrite(full_signature,signature_img)
     #cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'],'signature.jpg'), signature_img)
     #cv2.imwrite(os.path.join('static/images' , 'signature.jpg'), signature_img)
@@ -95,8 +97,10 @@ def predict_front_end():
 
     photo_img = img[243:371,450:585]
     photo_img = cv2.cvtColor(photo_img, cv2.COLOR_BGR2RGB)
-    photo_path = 'photo.jpg?dummy='+str(ran)
-    full_photo = os.path.join(app.config['UPLOAD_FOLDER'],photo_path)
+    #photo_path = 'photo.jpg?dummy='+str(ran)
+    #full_photo = os.path.join(app.config['UPLOAD_FOLDER'],photo_path)
+    full_photo = os.path.join('static/images' , 'photo.jpg')
+    os.remove(full_photo)
     cv2.imwrite(full_photo,photo_img)
     #cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'], 'photo.jpg'), photo_img)
     #cv2.imwrite(os.path.join('static/images' , 'photo.jpg'), photo_img)
