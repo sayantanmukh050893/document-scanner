@@ -11,7 +11,7 @@ from PIL import Image
 image_folder = os.path.join('public', 'images')
 
 app = Flask(__name__)
-dropzone = Dropzone(app)
+# dropzone = Dropzone(app)
 app.config['UPLOAD_FOLDER'] = image_folder
 
 # Dropzone settings
@@ -110,5 +110,5 @@ def predict_front_end():
 #     os.remove(os.path.join(image_folder,"signature.jpg"))
 
 if __name__ == "__main__":
-    app.run(debug=True,port=1211)
+    app.run(debug=True)
     #delete_files()
