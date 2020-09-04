@@ -1,4 +1,6 @@
 from flask import Flask,request,jsonify,render_template,send_file
+#from flask_dropzone import Dropzone
+#from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
 import pandas as pd
 import os
 import numpy as np
@@ -6,10 +8,24 @@ import cv2
 import pytesseract
 from PIL import Image
 
-image_folder = os.path.join('static', 'images')
+image_folder = os.path.join('public', 'images')
 
 app = Flask(__name__)
+dropzone = Dropzone(app)
 app.config['UPLOAD_FOLDER'] = image_folder
+
+# Dropzone settings
+# app.config['DROPZONE_UPLOAD_MULTIPLE'] = True
+# app.config['DROPZONE_ALLOWED_FILE_CUSTOM'] = True
+# app.config['DROPZONE_ALLOWED_FILE_TYPE'] = 'image/*'
+# app.config['DROPZONE_REDIRECT_VIEW'] = 'results'
+
+# Uploads settings
+#app.config['UPLOADED_PHOTOS_DEST'] = os.getcwd() + '/uploads'
+# app.config['UPLOADED_PHOTOS_DEST'] = os.path.join('public', 'images')
+# photos = UploadSet('photos', IMAGES)
+# configure_uploads(app, photos)
+# patch_request_class(app)  # set maximum file size, default is 16MB
 
 @app.route('/')
 def home():
@@ -68,15 +84,17 @@ def predict_front_end():
 
     signature_img=img[299:360,4:260]
     signature_img = cv2.cvtColor(signature_img, cv2.COLOR_BGR2RGB)
-    cv2.imwrite(os.path.join('static/images' , 'signature.jpg'), signature_img)
-    #full_signature = "dynamic\images\signature.jpg"
-    full_signature = os.path.join('static/images' , 'signature.jpg')
+    cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'],'signature.jpg'), signature_img)
+    #cv2.imwrite(os.path.join('static/images' , 'signature.jpg'), signature_img)
+    full_signature = os.path.join(app.config['UPLOAD_FOLDER'],'signature.jpg')
+    #full_signature = os.path.join('static/images' , 'signature.jpg')
 
     photo_img = img[243:371,450:585]
     photo_img = cv2.cvtColor(photo_img, cv2.COLOR_BGR2RGB)
-    cv2.imwrite(os.path.join('static/images' , 'photo.jpg'), photo_img)
-    #full_photo = "dynamic\images\photo.jpg"
-    full_photo = os.path.join('static/images' , 'photo.jpg')
+    cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'], 'photo.jpg'), photo_img)
+    #cv2.imwrite(os.path.join('static/images' , 'photo.jpg'), photo_img)
+    full_photo = os.path.join(app.config['UPLOAD_FOLDER'],'photo.jpg')
+    #full_photo = os.path.join('static/images' , 'photo.jpg')
 
     pan_details = {
     "Name":name,
@@ -87,7 +105,10 @@ def predict_front_end():
 
     return render_template("result.html",prediction_text=pan_details,signature = full_signature, photo = full_photo)
 
-
+# def delete_files():
+#     os.remove(os.path.join(image_folder,"photo.jpg"))
+#     os.remove(os.path.join(image_folder,"signature.jpg"))
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True,port=1211)
+    #delete_files()
