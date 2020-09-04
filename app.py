@@ -8,8 +8,11 @@ import cv2
 import pytesseract
 from PIL import Image
 from random import randint
+import datetime
+import time
 
-image_folder = os.path.join('static', 'images')
+#image_folder = os.path.join('static', 'images')
+image_folder = "/static"
 
 app = Flask(__name__)
 # dropzone = Dropzone(app)
@@ -88,9 +91,12 @@ def predict_front_end():
     #ran = randint(0,10e6)
     #signature_path = 'signature.jpg?dummy='+str(ran)
     #full_signature = os.path.join(app.config['UPLOAD_FOLDER'],signature_path)
-    full_signature = os.path.join(app.config['UPLOAD_FOLDER'], 'signature.jpg')
-    os.remove(full_signature)
-    cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'], 'signature.jpg'),signature_img)
+    signature_path = "signature"+str(time.time())+".jpg"
+    full_signature = os.path.join('static',signature_path)
+    #full_signature = os.path.join(app.config['UPLOAD_FOLDER'], 'signature.jpg')
+    #os.remove(full_signature)
+    cv2.imwrite(full_signature,signature_img)
+    #cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'], 'signature.jpg'),signature_img)
     #cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'],'signature.jpg'), signature_img)
     #cv2.imwrite(os.path.join('static/images' , 'signature.jpg'), signature_img)
     #full_signature = os.path.join('static/images' , 'signature.jpg')
@@ -99,9 +105,12 @@ def predict_front_end():
     photo_img = cv2.cvtColor(photo_img, cv2.COLOR_BGR2RGB)
     #photo_path = 'photo.jpg?dummy='+str(ran)
     #full_photo = os.path.join(app.config['UPLOAD_FOLDER'],photo_path)
-    full_photo = os.path.join(app.config['UPLOAD_FOLDER'], 'photo.jpg')
-    os.remove(full_photo)
-    cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'], 'photo.jpg'),photo_img)
+    photo_path = "photo"+str(time.time())+".jpg"
+    full_photo = os.path.join('static',photo_path)
+    #full_photo = os.path.join(app.config['UPLOAD_FOLDER'], 'photo.jpg')
+    #os.remove(full_photo)
+    cv2.imwrite(full_photo,photo_img)
+    #cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'], 'photo.jpg'),photo_img)
     #cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'], 'photo.jpg'), photo_img)
     #cv2.imwrite(os.path.join('static/images' , 'photo.jpg'), photo_img)
     #full_photo = os.path.join(app.config['UPLOAD_FOLDER'],'photo.jpg')
@@ -114,7 +123,7 @@ def predict_front_end():
     "Pan ID":pan
     }
 
-    return render_template("result.html",prediction_text=pan_details,signature = full_signature, photo = full_photo)
+    return render_template("result.html",prediction_text=pan_details,signature = signature_path, photo = photo_path)
 
 # def delete_files():
 #     os.remove(os.path.join(image_folder,"photo.jpg"))
