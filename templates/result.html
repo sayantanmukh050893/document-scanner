@@ -8,7 +8,7 @@
   </head>
   <style>
   body {
-  background: url('static/images/PAN_CARD_result_page_2.jpg') no-repeat center center fixed;
+  background: url('static/PAN_CARD_result_page_2.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   /* -o-background-size: cover; */
@@ -46,7 +46,7 @@ input {
      {% for key, value in prediction_text.items() %}
         {{ key }} : {{ value }}<br><br>
      {% endfor %}
-     <img src="{{ signature }}" style="float: center; height: 8em; margin-right: 1%; margin-bottom: 0.5em;">
-     <img src="{{ photo }}" style="float: center; height: 8em; margin-left: 1%; margin-bottom: 0.5em;"><br>
+     <img src="{{ url_for('static', filename=signature) }}" style="float: center; height: 8em; margin-right: 1%; margin-bottom: 0.5em;" >
+     <img src="{{ url_for('static', filename=photo) }}" style="float: center; height: 8em; margin-left: 1%; margin-bottom: 0.5em;"><br>
    </body>
 </html>
