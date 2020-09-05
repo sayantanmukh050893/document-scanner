@@ -9,7 +9,7 @@
   </head>
   <style>
   body {
-  background-image: url('static/PAN_CARD_background.jpg');
+  background-image: url('static/index_page_background_1.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -32,16 +32,31 @@ input {
 	text-align:center;
 	cursor:pointer;
 }
+input[type='radio'] {
+   transform: scale(1.5); }
+
   </style>
   <body>
+    <div class="container">
 
       <br>
       <br>
       <form align="center" action="{{ url_for('predict_front_end')}}" method="post" enctype="multipart/form-data">
+
         <input type="file" id="myFile" name="filename">
         <input type="submit">
+        <br>
+        <br>
+        <legend align="center"><h1>Please select your document type:</h1></legend>
+        <label class="radio-inline" align="center">
+          <input type="radio" id="pan" name="document" value="pan"><h3>Pan Card</h3>
+        </label>
+
+        <label class="radio-inline" align="center">
+          <input type="radio" id="voter" name="document" value="voter" checked><h3>Voter ID</h3>
+        </label>
+
       </form>
-
-
+    </div>
   </body>
 </html>
