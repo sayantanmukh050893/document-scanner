@@ -119,19 +119,19 @@ def predict_front_end():
     elif(selection=="voter"):
         img = cv2.resize(img,dsize=(2004,3368))
 
-        name_img = img[2122:2422,905:1943]
+        name_img = img[2122:2422,895:1943]
         name = pytesseract.image_to_string(name_img)
 
-        father_name_img=img[2706:2945,905:1949]
+        father_name_img=img[2706:2945,895:1949]
         father_name = pytesseract.image_to_string(father_name_img)
 
         date_of_birth_img=img[3172:3334,910:1943]
         date_of_birth = pytesseract.image_to_string(date_of_birth_img)
 
-        voter_id_img=img[906:1106,66:1032]
+        voter_id_img=img[906:1106,66:1028]
         voter_id = pytesseract.image_to_string(voter_id_img)
 
-        sex_img=img[2956:3145,1182:1360]
+        sex_img=img[2956:3145,1182:1400]
         sex = pytesseract.image_to_string(sex_img,lang='eng',config='--psm 6')
 
         photo_img=img[922:1878,1177:1927]
