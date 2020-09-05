@@ -69,70 +69,89 @@ def predict_api():
 
     return jsonify(results=pan_details)
 
-@app.route('/get-pan-card-details',methods=["POST"])
+@app.route('/get-document-details',methods=["POST"])
 def predict_front_end():
     data = request.form.get('filename')
     image = request.files['filename']
 
+    selection = request.form.get('document')
+
     img = Image.open(image)
     img = np.array(img)
-    img = cv2.resize(img,dsize=(600,384))
-    
-    name_img=img[93:135,3:341]
-    #name_img=img[93:131,6:330]
-    name = pytesseract.image_to_string(name_img)
-    
-    father_name_img=img[140:179,3:341]
-    #father_name_img=img[137:167,5:350]
-    father_name = pytesseract.image_to_string(father_name_img)
-    
-    date_of_birth_img=img[181:221,3:341]
-    #date_of_birth_img=img[172:222,4:150]
-    date_of_birth = pytesseract.image_to_string(date_of_birth_img)
-    
-    pan_img=img[248:297,1:282]
-    #pan_img=img[243:289,4:233]
-    pan = pytesseract.image_to_string(pan_img)
-    
-    signature_img=img[302:351,1:312]
-    #signature_img=img[299:360,4:260]
-    signature_img = cv2.cvtColor(signature_img, cv2.COLOR_BGR2RGB)
-    #ran = randint(0,10e6)
-    #signature_path = 'signature.jpg?dummy='+str(ran)
-    #full_signature = os.path.join(app.config['UPLOAD_FOLDER'],signature_path)
-    signature_path = "signature"+str(time.time())+".jpg"
-    full_signature = os.path.join('static',signature_path)
-    #full_signature = os.path.join(app.config['UPLOAD_FOLDER'], 'signature.jpg')
-    #os.remove(full_signature)
-    cv2.imwrite(full_signature,signature_img)
-    #cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'], 'signature.jpg'),signature_img)
-    #cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'],'signature.jpg'), signature_img)
-    #cv2.imwrite(os.path.join('static/images' , 'signature.jpg'), signature_img)
-    #full_signature = os.path.join('static/images' , 'signature.jpg')
 
-    photo_img = img[243:371,450:585]
-    photo_img = cv2.cvtColor(photo_img, cv2.COLOR_BGR2RGB)
-    #photo_path = 'photo.jpg?dummy='+str(ran)
-    #full_photo = os.path.join(app.config['UPLOAD_FOLDER'],photo_path)
-    photo_path = "photo"+str(time.time())+".jpg"
-    full_photo = os.path.join('static',photo_path)
-    #full_photo = os.path.join(app.config['UPLOAD_FOLDER'], 'photo.jpg')
-    #os.remove(full_photo)
-    cv2.imwrite(full_photo,photo_img)
-    #cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'], 'photo.jpg'),photo_img)
-    #cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'], 'photo.jpg'), photo_img)
-    #cv2.imwrite(os.path.join('static/images' , 'photo.jpg'), photo_img)
-    #full_photo = os.path.join(app.config['UPLOAD_FOLDER'],'photo.jpg')
-    #full_photo = os.path.join('static/images' , 'photo.jpg')
+    # For PAN Card
+    if(selection=="pan"):
+        img = cv2.resize(img,dsize=(600,384))
 
-    pan_details = {
-    "Name":name,
-    "Father's Name":father_name,
-    "Date of Birth":date_of_birth,
-    "Pan ID":pan
-    }
+        name_img=img[93:135,3:341]
+        name = pytesseract.image_to_string(name_img)
 
-    return render_template("result.html",prediction_text=pan_details,signature = signature_path, photo = photo_path)
+        father_name_img=img[140:179,3:341]
+        father_name = pytesseract.image_to_string(father_name_img)
+
+        date_of_birth_img=img[181:221,3:341]
+        date_of_birth = pytesseract.image_to_string(date_of_birth_img)
+
+        pan_img=img[248:297,1:282]
+        pan = pytesseract.image_to_string(pan_img)
+
+        photo_img = img[239:380,452:591]
+        photo_img = cv2.cvtColor(photo_img, cv2.COLOR_BGR2RGB)
+        photo_path = "photo"+str(time.time())+".jpg"
+        full_photo = os.path.join('static',photo_path)
+        cv2.imwrite(full_photo,photo_img)
+
+        signature_img = img[302:351,1:312]
+        signature_img = cv2.cvtColor(signature_img, cv2.COLOR_BGR2RGB)
+        signature_path = "signature"+str(time.time())+".jpg"
+        full_signature = os.path.join('static',signature_path)
+        cv2.imwrite(full_signature,signature_img)
+
+        pan_details = {
+        "Name":name,
+        "Father's Name":father_name,
+        "Date of Birth":date_of_birth,
+        "Pan ID":pan
+        }
+
+        r = render_template("pan.html",prediction_text=pan_details,signature = signature_path,photo = photo_path)
+
+    elif(selection=="voter"):
+        img = cv2.resize(img,dsize=(2004,3368))
+
+        name_img = img[2122:2422,905:1943]
+        name = pytesseract.image_to_string(name_img)
+
+        father_name_img=img[2706:2945,905:1949]
+        father_name = pytesseract.image_to_string(father_name_img)
+
+        date_of_birth_img=img[3172:3334,910:1943]
+        date_of_birth = pytesseract.image_to_string(date_of_birth_img)
+
+        voter_id_img=img[906:1106,66:1032]
+        voter_id = pytesseract.image_to_string(voter_id_img)
+
+        sex_img=img[2956:3145,1182:1360]
+        sex = pytesseract.image_to_string(sex_img,lang='eng',config='--psm 6')
+
+        photo_img=img[922:1878,1177:1927]
+        photo_img = cv2.cvtColor(photo_img, cv2.COLOR_BGR2RGB)
+        photo_path = "photo"+str(time.time())+".jpg"
+        full_photo = os.path.join('static',photo_path)
+        cv2.imwrite(full_photo,photo_img)
+
+        voter_details = {
+        "Voter ID":voter_id,
+        "Name":name,
+        "Father's Name":father_name,
+        "Sex":sex,
+        "Date of Birth":date_of_birth
+        }
+
+        r = render_template("voter.html",prediction_text=voter_details,photo = photo_path)
+
+    #r = add_header(r)
+    return r
 
 # def delete_files():
 #     os.remove(os.path.join(image_folder,"photo.jpg"))
