@@ -1,2 +1,2 @@
-# Dogs_Cats_Image
-The following repository is about classifying an image as either Dog or Cat
+# Documents Scanner
+The following repository is about scanning different official documents like PAN Card and Voter ID card with the help of OCR technologies.
